@@ -6,6 +6,10 @@ import RecipeList from "./RecipeList";
 import AddRecipeForm from "./components/AddRecipeForm";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import RecipeDetail from "./components/RecipeDetail";
+import RecommendationsList from "./components/RecommendationsList";
+import FavoritesList from "./components/FavoritesList";
+import SearchBar from "./components/SearchBar";
+
 
 function App() {
   const [count, setCount] = useState(0);
@@ -24,6 +28,9 @@ function App() {
       <RecipeList />
       <AddRecipeForm />
       <RecipeDetail />
+      <RecommendationsList />
+      <FavoritesList />
+      <SearchBar />
       <Router>
         <Routes>
           <Route path="/recipe/:id" element={<RecipeList />} />
