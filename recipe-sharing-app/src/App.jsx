@@ -10,7 +10,7 @@ function App() {
   const [count, setCount] = useState(0);
 
   return (
-    <>
+    <div>
       <div>
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
@@ -22,11 +22,13 @@ function App() {
       <h1>Vite + React</h1>
       <RecipeList />
       <AddRecipeForm />
+
       <Router>
-      <Routes>
-        <Route path="/recipe/:id" element={<RecipeDetails />} />
-        <Route path="/delete" element={<DeleteRecipeButton recipeId={1} />} />
-      </Routes>
+        <Routes>
+          <Route path="/recipe/:id" element={<RecipeList />} />
+          <Route path="/delete" element={<AddRecipeForm recipeId={1} />} />
+        </Routes>
+      </Router>
 
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
@@ -39,7 +41,7 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
-    </>
+    </div>
   );
 }
 
