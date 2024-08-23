@@ -5,6 +5,7 @@ import "./App.css";
 import RecipeList from "./RecipeList";
 import AddRecipeForm from "./components/AddRecipeForm";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import RecipeDetail from "./components/RecipeDetail";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -22,7 +23,7 @@ function App() {
       <h1>Vite + React</h1>
       <RecipeList />
       <AddRecipeForm />
-
+      <RecipeDetail />
       <Router>
         <Routes>
           <Route path="/recipe/:id" element={<RecipeList />} />
