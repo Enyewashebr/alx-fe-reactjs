@@ -4,6 +4,7 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 import RecipeList from "./RecipeList";
 import AddRecipeForm from "./components/AddRecipeForm";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -21,6 +22,12 @@ function App() {
       <h1>Vite + React</h1>
       <RecipeList />
       <AddRecipeForm />
+      <Router>
+      <Routes>
+        <Route path="/recipe/:id" element={<RecipeDetails />} />
+        <Route path="/delete" element={<DeleteRecipeButton recipeId={1} />} />
+      </Routes>
+
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
