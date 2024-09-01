@@ -2,13 +2,19 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import { QueryClient, QueryClientProvider } from "react-query";
+import PostsComponent from "./PostsComponent";
 
+const queryClient = new QueryClient();
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
       <div>
+        <QueryClientProvider client={queryClient}>
+          <PostsComponent />
+        </QueryClientProvider>
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
@@ -29,7 +35,7 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
     </>
-  )
+  );
 }
 
 export default App
