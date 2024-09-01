@@ -6,6 +6,7 @@ const RegistrationForm = () => {
     email: "",
     password: "",
   });
+  const [errors, setErrors] = useState({});
 
   const { username, email, password } = formData;
 
@@ -16,16 +17,27 @@ const RegistrationForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Add validation logic here
-    if (
-      username.trim() === "" ||
-      email.trim() === "" ||
-      password.trim() === ""
-    ) {
-      alert("Please fill in all fields");
+
+    // Basic form validation
+    if (!username) {
+      setErrors({ ...errors, username: "Username is required" });
       return;
     }
+    if (!email) {
+      setErrors({ ...errors, email: "Email is required" });
+      return;
+    }
+    if (!password) {
+      setErrors({ ...errors, password: "Password is required" });
+      return;
+    }
+
+    // Clear any previous errors
+    setErrors({});
+
     // Handle form submission
+    // You can proceed with form submission logic here
+    console.log("Form data:", formData);
   };
 
   return (
@@ -37,6 +49,8 @@ const RegistrationForm = () => {
         onChange={handleChange}
         placeholder="Username"
       />
+      {errors.username && <div style={{ color: "red" }}>{errors.username}</div>}
+
       <input
         type="email"
         name="email"
@@ -44,6 +58,8 @@ const RegistrationForm = () => {
         onChange={handleChange}
         placeholder="Email"
       />
+      {errors.email && <div style={{ color: "red" }}>{errors.email}</div>}
+
       <input
         type="password"
         name="password"
@@ -51,6 +67,8 @@ const RegistrationForm = () => {
         onChange={handleChange}
         placeholder="Password"
       />
+      {errors.password && <div style={{ color: "red" }}>{errors.password}</div>}
+
       <button type="submit">Submit</button>
     </form>
   );
