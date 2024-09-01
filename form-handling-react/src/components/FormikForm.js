@@ -24,7 +24,7 @@ const FormikForm = () => {
         <Field type="text" name="username" placeholder="Username" />
         <ErrorMessage name="username" component="div" />
 
-        <Field type="email" name="email" placeholder="Email" />
+        <Field type="email" name="email" placeholder="Email " />
         <ErrorMessage name="email" component="div" />
 
         <Field type="password" name="password" placeholder="Password" />
