@@ -3,16 +3,16 @@ import PropTypes from "prop-types";
 
 const UserProfile = ({ user }) => {
   return (
-    <div className="max-w-xs sm:max-w-sm mx-auto p-4 sm:p-6 md:p-8 bg-white shadow-lg rounded-lg">
+    <div className=" sm:max-w-xs md:max-w-sm sm:p-4 md:p-8 bg-white shadow-lg rounded-lg">
       <img
         src={user.profileImage}
         alt={`${user.name}'s profile`}
-        className="w-24 h-24 sm:w-36 sm:h-36 rounded-full mx-auto mb-4"
+        className="sm:w-24 sm:h-24 md:w-36 md:h-36 rounded-full mx-auto mb-4"
       />
-      <h1 className="text-lg sm:text-xl font-semibold text-center mb-2">
+      <h1 className=" sm:text-lg md:text-xl font-semibold text-center mb-2">
         {user.name}
       </h1>
-      <p className="text-sm sm:text-base text-gray-600 text-center">
+      <p className="sm:text-sm md:text-base text-gray-600 text-center">
         {user.bio}
       </p>
     </div>
@@ -24,7 +24,7 @@ UserProfile.propTypes = {
   user: PropTypes.shape({
     name: PropTypes.string.isRequired,
     profileImage: PropTypes.string.isRequired,
-    
+
     bio: PropTypes.string,
   }).isRequired,
 };
