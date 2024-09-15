@@ -14,7 +14,7 @@ const RecipeDetail = () => {
   if (!recipe) return <div className="text-center">Loading...</div>;
 
   return (
-    <div className="p-4">
+    <div className="p-4 max-w-2xl mx-auto shadow-lg rounded-lg bg-white">
       <h1 className="text-3xl font-bold mb-4">{recipe.title}</h1>
       <img
         src={recipe.image}
@@ -36,4 +36,3 @@ const RecipeDetail = () => {
 };
 
 export default RecipeDetail;
-
