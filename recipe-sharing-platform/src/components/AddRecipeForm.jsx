@@ -3,12 +3,12 @@ import React, { useState } from "react";
 const AddRecipeForm = () => {
   const [title, setTitle] = useState("");
   const [ingredients, setIngredients] = useState("");
-  const [instructions, setInstructions] = useState("");
+  const [steps, setSteps] = useState("");
   const [error, setError] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!title || !ingredients || !instructions) {
+    if (!title || !ingredients || !steps) {
       setError("Please fill out all fields");
       return;
     }
@@ -23,11 +23,15 @@ const AddRecipeForm = () => {
 
     setError("");
     // Handle adding the recipe (e.g., send to backend or update state)
-    console.log({ title, ingredients: ingredientsList, instructions });
+    console.log({
+      title,
+      ingredients: ingredientsList,
+      steps: steps.split("\n").map((step) => step.trim()),
+    });
     // Clear form fields
     setTitle("");
     setIngredients("");
-    setInstructions("");
+    setSteps("");
   };
 
   return (
@@ -58,19 +62,17 @@ const AddRecipeForm = () => {
         />
       </div>
       <div className="mb-4">
-        <label className="block text-sm font-medium">
-          Cooking Instructions
-        </label>
+        <label className="block text-sm font-medium">Cooking Steps</label>
         <textarea
-          value={instructions}
-          onChange={(e) => setInstructions(e.target.value)}
+          value={steps}
+          onChange={(e) => setSteps(e.target.value)}
           className="mt-1 block w-full border border-gray-300 rounded-md p-2"
           required
         />
       </div>
       <button
         type="submit"
-        className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
+        className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition duration-200"
       >
         Add Recipe
       </button>
