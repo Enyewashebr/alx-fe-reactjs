@@ -4,30 +4,45 @@ const AddRecipeForm = () => {
   const [title, setTitle] = useState("");
   const [ingredients, setIngredients] = useState("");
   const [steps, setSteps] = useState("");
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState({}); // State for errors
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!title || !ingredients || !steps) {
-      setError("Please fill out all fields");
-      return;
-    }
+  const validate = () => {
+    const newErrors = {};
+    if (!title) newErrors.title = "Recipe title is required";
+    if (!ingredients) newErrors.ingredients = "Ingredients are required";
+    if (!steps) newErrors.steps = "Cooking steps are required";
 
     const ingredientsList = ingredients
       .split(",")
       .map((ingredient) => ingredient.trim());
     if (ingredientsList.length < 2) {
-      setError("Please enter at least two ingredients");
+      newErrors.ingredients = "Please enter at least two ingredients";
+    }
+
+    return newErrors;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const validationErrors = validate();
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
       return;
     }
 
-    setError("");
+    setErrors({}); // Clear errors if validation passes
+
     // Handle adding the recipe (e.g., send to backend or update state)
+    const ingredientsList = ingredients
+      .split(",")
+      .map((ingredient) => ingredient.trim());
     console.log({
       title,
       ingredients: ingredientsList,
       steps: steps.split("\n").map((step) => step.trim()),
     });
+
     // Clear form fields
     setTitle("");
     setIngredients("");
@@ -39,7 +54,7 @@ const AddRecipeForm = () => {
       onSubmit={handleSubmit}
       className="max-w-lg mx-auto p-4 bg-white shadow-md rounded-md"
     >
-      {error && <p className="text-red-500 mb-4">{error}</p>}
+      {errors.title && <p className="text-red-500 mb-2">{errors.title}</p>}
       <div className="mb-4">
         <label className="block text-sm font-medium">Recipe Title</label>
         <input
@@ -47,9 +62,11 @@ const AddRecipeForm = () => {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-          required
         />
       </div>
+      {errors.ingredients && (
+        <p className="text-red-500 mb-2">{errors.ingredients}</p>
+      )}
       <div className="mb-4">
         <label className="block text-sm font-medium">
           Ingredients (comma-separated)
@@ -58,16 +75,15 @@ const AddRecipeForm = () => {
           value={ingredients}
           onChange={(e) => setIngredients(e.target.value)}
           className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-          required
         />
       </div>
+      {errors.steps && <p className="text-red-500 mb-2">{errors.steps}</p>}
       <div className="mb-4">
         <label className="block text-sm font-medium">Cooking Steps</label>
         <textarea
           value={steps}
           onChange={(e) => setSteps(e.target.value)}
           className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-          required
         />
       </div>
       <button
