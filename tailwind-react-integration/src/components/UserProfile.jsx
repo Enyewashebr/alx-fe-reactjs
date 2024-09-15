@@ -1,20 +1,31 @@
-function UserProfile() {
+import React from "react";
+import PropTypes from "prop-types";
+
+const UserProfile = ({ user }) => {
   return (
-    <div className="bg-gray-100 p-4 sm:p-6 md:p-8 max-w-xs sm:max-w-sm md:max-w-md mx-auto my-20 rounded-lg shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-xl">
+    <div className="max-w-xs sm:max-w-sm mx-auto p-4 sm:p-6 md:p-8 bg-white shadow-lg rounded-lg">
       <img
-        src="https://via.placeholder.com/150"
-        alt="User"
-        className="rounded-full w-24 h-24 sm:w-28 sm:h-28 md:w-36 md:h-36 mx-auto transition-transform duration-300 ease-in-out hover:scale-110"
+        src={user.profileImage}
+        alt={`${user.name}'s profile`}
+        className="w-24 h-24 sm:w-36 sm:h-36 rounded-full mx-auto mb-4"
       />
-      <h1 className="text-lg sm:text-xl md:text-2xl text-blue-800 my-4 transition-colors duration-300 ease-in-out hover:text-blue-500">
-        John Doe
+      <h1 className="text-lg sm:text-xl font-semibold text-center mb-2">
+        {user.name}
       </h1>
-      <p className="text-sm sm:text-base md:text-lg text-gray-600">
-        Developer at Example Co. Loves to write code and explore new
-        technologies.
+      <p className="text-sm sm:text-base text-gray-600 text-center">
+        {user.bio}
       </p>
     </div>
   );
-}
+};
+
+// PropTypes validation
+UserProfile.propTypes = {
+  user: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    profileImage: PropTypes.string.isRequired,
+    bio: PropTypes.string,
+  }).isRequired,
+};
 
 export default UserProfile;
