@@ -24,6 +24,7 @@ UserProfile.propTypes = {
   user: PropTypes.shape({
     name: PropTypes.string.isRequired,
     profileImage: PropTypes.string.isRequired,
+    
     bio: PropTypes.string,
   }).isRequired,
 };
