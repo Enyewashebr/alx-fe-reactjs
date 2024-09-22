@@ -7,6 +7,7 @@ function App() {
   return (
     <Router>
       <div>
+        
         <h1>GitHub User Search</h1>
         <Switch>
           <Route/>
