@@ -9,7 +9,7 @@ function App() {
       <div>
         <h1>GitHub User Search</h1>
         <Switch>
-          <Route  />
+          <Route/>
           {/* <Route path="/user/:username" component={UserProfile} /> */}
         </Switch>
       </div>
