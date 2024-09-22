@@ -1,82 +1,57 @@
 import React, { useState } from "react";
 
-function Search({ onSubmit, users, loading, error }) {
-  const [username, setUsername] = useState("");
-  const [location, setLocation] = useState("");
-  const [minRepos, setMinRepos] = useState(0);
+const Search = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [user, setUser] = useState(null);
+  const [error, setError] = useState(null);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    onSubmit({ username, location, minRepos });
+  const handleSearch = async () => {
+    try {
+      const response = await fetch(`/api/users?q=${searchTerm}`);
+      const data = await response.json();
+
+      if (data.length === 0) {
+        setError("Looks like we can't find the user");
+        setUser(null);
+      } else {
+        setUser(data[0]);
+        setError(null);
+      }
+    } catch (err) {
+      setError("An error occurred while searching for the user");
+      setUser(null);
+    }
   };
 
   return (
-    <div className="p-4">
-      <form
-        onSubmit={handleSubmit}
-        className="flex items-center justify-center"
-      >
-        <input
-          type="text"
-          placeholder="GitHub username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          className="mr-2 p-2 border border-gray-300 rounded"
-        />
-        <input
-          type="text"
-          placeholder="Location"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-          className="mr-2 p-2 border border-gray-300 rounded"
-        />
-        <input
-          type="number"
-          placeholder="Minimum Repositories"
-          value={minRepos}
-          onChange={(e) => setMinRepos(e.target.value)}
-          className="mr-2 p-2 border border-gray-300 rounded"
-        />
-        <button
-          type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded"
-        >
-          Search
-        </button>
-      </form>
+    <div>
+      <input
+        type="text"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+      <button onClick={handleSearch}>Search</button>
 
-      {loading && <p className="mt-4">Loading...</p>}
+      {error && (
+        <div>
+          <p>{error}</p>
+        </div>
+      )}
 
-      {error && <p className="mt-4 text-red-500">{error}</p>}
+      {user && (
+        <div>
+          <p>Name: {user.name}</p>
+          <p>Email: {user.email}</p>
+        </div>
+      )}
 
-      {users && users.length > 0 && (
-        <ul className="mt-4">
-          {users.map((user) => (
-            <li key={user.id} className="border p-2 my-2">
-              <img
-                src={user.avatar_url}
-                alt={user.login}
-                className="w-8 h-8 rounded-full"
-              />
-              <p className="ml-2">{user.login}</p>
-              <p className="ml-2 text-gray-500">Location: {user.location}</p>
-              <p className="ml-2 text-gray-500">
-                Repositories: {user.public_repos}
-              </p>
-              <a
-                href={user.html_url}
-                className="ml-2 text-blue-500"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                View Profile
-              </a>
-            </li>
-          ))}
-        </ul>
+      {!user && !error && (
+        <div>
+          <p>Looks like we can't find the user</p>
+        </div>
       )}
     </div>
   );
-}
+};
 
 export default Search;
