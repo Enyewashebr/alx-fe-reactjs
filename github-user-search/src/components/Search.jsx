@@ -1,55 +1,57 @@
 import React, { useState } from "react";
 
-const Search = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [user, setUser] = useState(null);
-  const [error, setError] = useState(null);
+const Search = ({ onSubmit, users, loading, error }) => {
+  const [username, setUsername] = useState("");
+  const [location, setLocation] = useState("");
+  const [minRepos, setMinRepos] = useState(0);
 
-  const handleSearch = async () => {
-    try {
-      const response = await fetch(`/api/users?q=${searchTerm}`);
-      const data = await response.json();
-
-      if (data.length === 0) {
-        setError("Looks like we can't find the user");
-        setUser(null);
-      } else {
-        setUser(data[0]);
-        setError(null);
-      }
-    } catch (err) {
-      setError("An error occurred while searching for the user");
-      setUser(null);
-    }
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    onSubmit({ username, location, minRepos });
   };
 
   return (
     <div>
-      <input
-        type="text"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
-      <button onClick={handleSearch}>Search</button>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="GitHub username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Location"
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
+        />
+        <input
+          type="number"
+          placeholder="Minimum Repositories"
+          value={minRepos}
+          onChange={(e) => setMinRepos(e.target.value)}
+        />
+        <button type="submit">Search</button>
+      </form>
 
-      {error && (
-        <div>
-          <p>{error}</p>
-        </div>
+      {loading && <p>Loading...</p>}
+
+      {error && <p>{error}</p>}
+
+      {users && users.length > 0 && (
+        <ul>
+          {users.map((user) => (
+            <li key={user.id}>
+              <img src={user.avatar_url} alt={user.login} />
+              <p>{user.login}</p>
+              <p>Location: {user.location}</p>
+              <p>Repositories: {user.public_repos}</p>
+            </li>
+          ))}
+        </ul>
       )}
 
-      {user && (
-        <div>
-          <p>Name: {user.name}</p>
-          <p>Email: {user.email}</p>
-        </div>
-      )}
-
-      {!user && !error && (
-        <div>
-          <p>Looks like we can't find the user</p>
-        </div>
-      )}
+      {users && users.length === 0 && <p>Looks like we can't find the user</p>}
     </div>
   );
 };
