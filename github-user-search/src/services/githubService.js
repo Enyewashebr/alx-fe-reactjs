@@ -11,4 +11,5 @@ const fetchUserData = async (username) => {
   }
 };
 
+
 export { fetchUserData };
