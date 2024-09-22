@@ -8,10 +8,10 @@ function App() {
     <Router>
       <div>
         <h1>GitHub User Search</h1>
-        {/* <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/user/:username" component={UserProfile} />
-        </Switch> */}
+        <Switch>
+          <Route  />
+          {/* <Route path="/user/:username" component={UserProfile} /> */}
+        </Switch>
       </div>
     </Router>
   );
